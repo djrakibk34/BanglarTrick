@@ -1,231 +1,240 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>বাংলার ট্রিক | Know for Sharing</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BanglarTrick | Know for Sharing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0f0f0f;
-      color: #e0e0e0;
-      line-height: 1.6;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f0f0f;
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
 
-    header {
-      background: #161616;
-      padding: 18px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #2a2a2a;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+        header {
+            background: #161616;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2a2a2a;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    .logo {
-      font-size: 22px;
-      font-weight: 700;
-      color: #00d4ff;
-    }
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #00d6ff;
+        }
 
-    nav a {
-      color: #ccc;
-      text-decoration: none;
-      margin-left: 22px;
-      font-size: 15px;
-    }
+        nav a {
+            color: #ccc;
+            text-decoration: none;
+            margin-left: 22px;
+            font-size: 15px;
+        }
 
-    nav a:hover {
-      color: #00d4ff;
-    }
+        nav a:hover {
+            color: #00d6ff;
+        }
 
-    .hero {
-      text-align: center;
-      padding: 70px 20px 50px;
-      background: linear-gradient(to bottom, #161616, #0f0f0f);
-    }
+        .hero {
+            text-align: center;
+            padding: 70px 20px;
+            background: linear-gradient(to bottom, #161616, #0f0f0f);
+        }
 
-    .hero h1 {
-      font-size: 36px;
-      margin-bottom: 12px;
-      color: #fff;
-    }
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 12px;
+            color: #fff;
+        }
 
-    .hero p {
-      font-size: 17px;
-      color: #aaa;
-      max-width: 600px;
-      margin: 0 auto;
-    }
+        .hero p {
+            font-size: 17px;
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-    .section-title {
-      font-size: 22px;
-      margin: 40px 0 20px;
-      color: #00d4ff;
-      border-left: 4px solid #00d4ff;
-      padding-left: 12px;
-    }
+        .section-title {
+            font-size: 22px;
+            margin: 40px 0 20px;
+            color: #00d6ff;
+            border-left: 4px solid #0064ff;
+            padding-left: 12px;
+        }
 
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 15px;
-      margin-bottom: 40px;
-    }
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
 
-    .cat-card {
-      background: #1c1c1c;
-      padding: 18px;
-      border-radius: 10px;
-      text-align: center;
-      border: 1px solid #2a2a2a;
-      transition: 0.3s;
-      cursor: pointer;
-    }
+        .cat-card {
+            background: #161616;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px solid #222;
+            transition: 0.3s;
+            cursor: pointer;
+        }
 
-    .cat-card:hover {
-      border-color: #00d4ff;
-      transform: translateY(-3px);
-    }
+        .cat-card:hover {
+            border-color: #00d6ff;
+            transform: translateY(-3px);
+        }
 
-    .posts {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
+        .cat-card h3 {
+            color: #fff;
+            font-size: 16px;
+        }
 
-    .post-card {
-      background: #1c1c1c;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid #2a2a2a;
-      transition: 0.3s;
-    }
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
 
-    .post-card:hover {
-      border-color: #00d4ff;
-    }
+        .post-card {
+            background: #161616;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #222;
+            transition: 0.3s;
+        }
 
-    .post-body {
-      padding: 18px;
-    }
+        .post-card:hover {
+            border-color: #444;
+        }
 
-    .post-body h3 {
-      font-size: 18px;
-      margin-bottom: 8px;
-      color: #fff;
-    }
+        .post-content {
+            padding: 20px;
+        }
 
-    .post-body p {
-      font-size: 14px;
-      color: #aaa;
-      margin-bottom: 12px;
-    }
+        .post-content h3 {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
 
-    .tag {
-      display: inline-block;
-      background: #00d4ff22;
-      color: #00d4ff;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-    }
+        .post-content p {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 15px;
+        }
 
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      margin-top: 60px;
-      border-top: 1px solid #2a2a2a;
-      color: #666;
-      font-size: 14px;
-    }
+        .post-meta {
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #222;
+            padding-top: 12px;
+        }
 
-    @media (max-width: 600px) {
-      .hero h1 {
-        font-size: 28px;
-      }
-      nav {
-        display: none;
-      }
-    }
-  </style>
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #161616;
+            color: #666;
+            margin-ion-top: 50px;
+            border-top: 1px solid #2a2a2a;
+            margin-top: 60px;
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">বাংলার ট্রিক</div>
-    <nav>
-      <a href="#">হোম</a>
-      <a href="#">ক্যাটাগরি</a>
-      <a href="#">আমাদের সম্পর্কে</a>
-    </nav>
-  </header>
+    <header>
+        <div class="logo">BanglarTrick</div>
+        <nav>
+            <a href="#">হোম</a>
+            <a href="#">টিপস ও ট্রিকস</a>
+            <a href="#">এন্ড্রয়েড</a>
+            <a href="#">যোগাযোগ</a>
+        </nav>
+    </header>
 
-  <section class="hero">
-    <h1>বাংলার ট্রিক</h1>
-    <p>Know for Sharing — বাংলাদেশের টেক ট্রিকস, টিউটোরিয়াল ও কমিউনিটি</p>
-  </section>
-
-  <div class="container">
-
-    <h2 class="section-title">ক্যাটাগরি</h2>
-    <div class="categories">
-      <div class="cat-card">মোবাইল ট্রিকস</div>
-      <div class="cat-card">অ্যান্ড্রয়েড ROM</div>
-      <div class="cat-card">অ্যাপ রিভিউ</div>
-      <div class="cat-card">অনলাইন আর্নিং</div>
-      <div class="cat-card">টুলস</div>
-      <div class="cat-card">সাইবার সিকিউরিটি</div>
+    <div class="hero">
+        <h1>তথ্য আদান প্রদান এর ভাণ্ডার</h1>
+        <p>সেরা সব প্রযুক্তির টিপস, ট্রিকস এবং নিত্যনতুন খবরের আপডেট পেতে সাথেই থাকুন।</p>
     </div>
 
-    <h2 class="section-title">সর্বশেষ পোস্ট</h2>
-    <div class="posts">
-
-      <div class="post-card">
-        <div class="post-body">
-          <h3>তোমাদের কাছে সবচেয়ে কাজে লাগে এমন মোবাইল ট্রিক কোনটা?</h3>
-          <p>বন্ধুরা, তোমরা রোজকার জীবনে কোন মোবাইল ট্রিকটা সবচেয়ে বেশি ব্যবহার করো?</p>
-          <span class="tag">মোবাইল ট্রিকস</span>
+    <div class="container">
+        <div class="section-title">ক্যাটাগরি সমূহ</div>
+        <div class="categories">
+            <div class="cat-card">
+                <h3>📱 এন্ড্রয়েড ট্রিকস</h3>
+            </div>
+            <div class="cat-card">
+                <h3>💻 পিসি ও ইন্টারনেট</h3>
+            </div>
+            <div class="cat-card">
+                <h3>⚙️ টেক নিউজ</h3>
+            </div>
+            <div class="cat-card">
+                <h3>🛠️ কাস্টমাইজেশন</h3>
+            </div>
         </div>
-      </div>
 
-      <div class="post-card">
-        <div class="post-body">
-          <h3>বাংলার ট্রিক নিয়মাবলী</h3>
-          <p>কমিউনিটির নিয়মাবলী ও লেখক হওয়ার নিয়ম জেনে নাও।</p>
-          <span class="tag">অফিশিয়াল</span>
+        <div class="section-title">সর্বশেষ টিউনসমূহ</div>
+        <div class="posts-grid">
+            <div class="post-card">
+                <div class="post-content">
+                    <h3>জেনে নিন জিমেইল একাউন্ট সুরক্ষিত রাখার ৫টি কার্যকরী উপায়</h3>
+                    <p>আপনার পার্সোনাল জিমেইল একাউন্ট হ্যাকারদের হাত থেকে রক্ষা করতে এই সহজ পদ্ধতিগুলো অনুসরণ করুন...</p>
+                    <div class="post-meta">
+                        <span>লিখেছেন: Admin</span>
+                        <span>তারিখ: ১২ আগস্ট, ২০২৬</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-card">
+                <div class="post-content">
+                    <h3>স্মার্টফোনের ব্যাটারি লাইফ দীর্ঘস্থায়ী করার দুর্দান্ত কিছু টেকনিক</h3>
+                    <p>মোবাইল ফোনের ব্যাটারি দ্রুত শেষ হয়ে যায়? জেনে নিন কীভাবে খুব সহজেই ব্যাটারির চার্জ ধরে রাখবেন...</p>
+                    <div class="post-meta">
+                        <span>লিখেছেন: Admin</span>
+                        <span>তারিখ: ১১ আগস্ট, ২০২৬</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-card">
+                <div class="post-content">
+                    <h3>কিভাবে খুব সহজে আপনার নিজের একটি ব্লগ সাইট তৈরি করবেন</h3>
+                    <p>গিটহাব পেজে ফ্রিতে ওয়েবসাইট বা ব্লগ বানিয়ে আজই আপনার অনলাইন জার্নি শুরু করে দিন...</p>
+                    <div class="post-meta">
+                        <span>লিখেছেন: Admin</span>
+                        <span>তারিখ: ১০ আগস্ট, ২০২৬</span>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="post-card">
-        <div class="post-body">
-          <h3>স্বাগতম জানাই বাংলার ট্রিক-এ</h3>
-          <p>আমরা একটি বাংলা টেক কমিউনিটি। এখানে তুমি শেয়ার করতে পারো বিভিন্ন ট্রিক ও টিউটোরিয়াল।</p>
-          <span class="tag">সাধারণ</span>
-        </div>
-      </div>
-
     </div>
-  </div>
 
-  <footer>
-    © 2026 বাংলার ট্রিক — Know for Sharing
-  </footer>
+    <footer>
+        <p>&copy; ২০২৬ BanglarTrick. সর্বস্বত্ব সংরক্ষিত।</p>
+    </footer>
 
 </body>
 </html>
