@@ -7,59 +7,14 @@
     <!-- সুপাবেস ক্লায়েন্ট লাইব্রেরি সিডিএন -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .login-box {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 350px;
-            text-align: center;
-        }
-        h2 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #007bff;
-            border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        #message {
-            margin-top: 15px;
-            font-size: 14px;
-        }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
+        h2 { color: #333; margin-bottom: 10px; }
+        p { color: #666; font-size: 14px; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; padding: 12px; background: #007bff; border: none; color: white; font-size: 16px; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        #message { margin-top: 15px; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -68,16 +23,16 @@
         <h2>ওয়াইফাই ইন্টারনেট</h2>
         <p>ইন্টারনেট ব্যবহার করতে আপনার ভাউচার কোড দিন</p>
         
-        <input type="text" id="voucherCode" placeholder="ভাউচার কোড লিখুন (যেমন: ABC123)">
+        <input type="text" id="voucherCode" placeholder="ভাউচার কোড লিখুন">
         <button onclick="verifyVoucher()">লগইন করুন</button>
         
         <div id="message"></div>
     </div>
 
     <script>
-        // আপনার সুপাবেস প্রজেক্টের ক্রডেনশিয়াল এখানে বসাবেন
-        const SUPABASE_URL = 'আপনার_সুপাবেস_প্রজেক্টের_URL_এখানে_দিন';
-        const SUPABASE_ANON_KEY = 'আপনার_সুপাবেস_ANON_KEY_এখানে_দিন';
+        // আপনার সুপাবেস প্রজেক্টের সঠিক তথ্য
+        const SUPABASE_URL = 'https://vtljboopsjurtniwmvjb.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_evDU3UCNmq2i-jkUoSP7Bg_5aAt2w19';
 
         // সুপাবেস ক্লায়েন্ট ইনিশিয়ালাইজ করা
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -96,7 +51,7 @@
             messageDiv.innerText = 'যাচাই করা হচ্ছে...';
 
             try {
-                // ১. ডাটাবেজ থেকে চেক করা কোডটি সঠিক কি না এবং আগে ব্যবহৃত হয়েছে কি না
+                // ১. ভাউচার চেক করা
                 const { data, error } = await _supabase
                     .from('vouchers')
                     .select('*')
@@ -110,7 +65,7 @@
                     return;
                 }
 
-                // ২. কোড সঠিক হলে এটিকে ব্যবহৃত (is_used = true) হিসেবে আপডেট করা
+                // ২. ভাউচার ব্যবহৃত (is_used = true) করা
                 const { error: updateError } = await _supabase
                     .from('vouchers')
                     .update({ is_used: true })
@@ -122,19 +77,13 @@
                     return;
                 }
 
-                // ৩. ইউজারের লগইন ইনফরমেশন device_logs টেবিলে সেভ করা
+                // ৩. লগ সেভ করা
                 await _supabase.from('device_logs').insert([
-                    { 
-                        voucher_used: codeInput,
-                        login_time: new Date()
-                    }
+                    { voucher_used: codeInput, login_time: new Date().toISOString() }
                 ]);
 
                 messageDiv.style.color = 'green';
                 messageDiv.innerText = '✅ সফল! ইন্টারনেট কানেক্ট হচ্ছে...';
-                
-                // সফল হওয়ার পর পরবর্তী পেজে রিডাইরেক্ট করতে পারেন বা ইন্টারনেট দিতে পারেন
-                // setTimeout(() => { window.location.href = "success.html"; }, 2000);
 
             } catch (err) {
                 console.error(err);
