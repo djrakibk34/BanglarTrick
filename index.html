@@ -30,7 +30,7 @@
     </div>
 
     <script>
-        // আপনার সুপাবেস প্রজেক্টের সঠিক তথ্য
+        // আপনার সুপাবেস প্রজেক্টের তথ্য
         const SUPABASE_URL = 'https://vtljboopsjurtniwmvjb.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_evDU3UCNmq2i-jkUoSP7Bg_5aAt2w19';
 
@@ -51,12 +51,11 @@
             messageDiv.innerText = 'যাচাই করা হচ্ছে...';
 
             try {
-                // ১. ভাউচার চেক করা
+                // ১. শুধু কোডটি ডাটাবেজে আছে কি না তা চেক করা
                 const { data, error } = await _supabase
                     .from('vouchers')
                     .select('*')
                     .eq('code', codeInput)
-                    .eq('is_used', false)
                     .single();
 
                 if (error || !data) {
@@ -65,17 +64,11 @@
                     return;
                 }
 
-                // ২. ভাউচার ব্যবহৃত (is_used = true) করা
-                const { error: updateError } = await _supabase
+                // ২. কোড সঠিক হলে এটিকে ব্যবহৃত (is_used = true) হিসেবে আপডেট করা
+                await _supabase
                     .from('vouchers')
                     .update({ is_used: true })
                     .eq('code', codeInput);
-
-                if (updateError) {
-                    messageDiv.style.color = 'red';
-                    messageDiv.innerText = '⚠️ একটি সমস্যা হয়েছে, আবার চেষ্টা করুন।';
-                    return;
-                }
 
                 // ৩. লগ সেভ করা
                 await _supabase.from('device_logs').insert([
