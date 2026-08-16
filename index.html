@@ -3,86 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WiFi Hotspot - Voucher Login</title>
-    <!-- সুপাবেস ক্লায়েন্ট লাইব্রেরি সিডিএন -->
+    <title>ওয়াইফাই ইন্টারনেট লগইন</title>
+    <!-- সুপাবেস ক্লায়েন্ট লাইব্রেরি -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: Arial, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
-        h2 { color: #333; margin-bottom: 10px; }
-        p { color: #666; font-size: 14px; margin-bottom: 20px; }
-        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-size: 16px; }
-        button { width: 100%; padding: 12px; background: #007bff; border: none; color: white; font-size: 16px; border-radius: 5px; cursor: pointer; }
-        button:hover { background: #0056b3; }
-        #message { margin-top: 15px; font-size: 14px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+        #message {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-    <div class="login-box">
+    <div class="login-card">
         <h2>ওয়াইফাই ইন্টারনেট</h2>
         <p>ইন্টারনেট ব্যবহার করতে আপনার ভাউচার কোড দিন</p>
         
-        <input type="text" id="voucherCode" placeholder="ভাউচার কোড লিখুন">
+        <input type="text" id="voucherCode" placeholder="যেমন: WIFI-XXXXX" autocomplete="off">
         <button onclick="verifyVoucher()">লগইন করুন</button>
         
         <div id="message"></div>
     </div>
 
     <script>
-        // আপনার সুপাবেস প্রজেক্টের তথ্য
-        const SUPABASE_URL = 'https://vtljboopsjurtniwmvjb.supabase.co';
+        // সুপাবেস কানেকশন ইনফরমেশন
+        const SUPABASE_URL = 'https://evdu3ucnmq2i.supabase.co'; // আপনার প্রজেক্ট ইউআরএল এখানে দিন যদি আলাদা হয়
         const SUPABASE_ANON_KEY = 'sb_publishable_evDU3UCNmq2i-jkUoSP7Bg_5aAt2w19';
-
-        // সুপাবেস ক্লায়েন্ট ইনিশিয়ালাইজ করা
+        
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         async function verifyVoucher() {
-            const codeInput = document.getElementById('voucherCode').value.trim();
-            const messageDiv = document.getElementById('message');
+            const rawInput = document.getElementById('voucherCode').value.trim();
+            const codeInput = rawInput.toUpperCase();
+            const msgDiv = document.getElementById('message');
 
             if (!codeInput) {
-                messageDiv.style.color = 'red';
-                messageDiv.innerText = 'দয়া করে ভাউচার কোড লিখুন!';
+                msgDiv.style.color = 'red';
+                msgDiv.innerText = 'দয়া করে ভাউচার কোড লিখুন!';
                 return;
             }
 
-            messageDiv.style.color = '#333';
-            messageDiv.innerText = 'যাচাই করা হচ্ছে...';
+            msgDiv.style.color = '#333';
+            msgDiv.innerText = 'যাচাই করা হচ্ছে...';
 
-            try {
-                // ১. শুধু কোডটি ডাটাবেজে আছে কি না তা চেক করা
-                const { data, error } = await _supabase
-                    .from('vouchers')
-                    .select('*')
-                    .eq('code', codeInput)
-                    .single();
+            // ১. ডাটাবেজ থেকে কোড খোঁজা
+            const { data: voucher, error } = await _supabase
+                .from('vouchers')
+                .select('*')
+                .eq('code', codeInput)
+                .single();
 
-                if (error || !data) {
-                    messageDiv.style.color = 'red';
-                    messageDiv.innerText = '❌ ভুল অথবা ইতিমধ্যে ব্যবহৃত কোড!';
-                    return;
-                }
-
-                // ২. কোড সঠিক হলে এটিকে ব্যবহৃত (is_used = true) হিসেবে আপডেট করা
-                await _supabase
-                    .from('vouchers')
-                    .update({ is_used: true })
-                    .eq('code', codeInput);
-
-                // ৩. লগ সেভ করা
-                await _supabase.from('device_logs').insert([
-                    { voucher_used: codeInput, login_time: new Date().toISOString() }
-                ]);
-
-                messageDiv.style.color = 'green';
-                messageDiv.innerText = '✅ সফল! ইন্টারনেট কানেক্ট হচ্ছে...';
-
-            } catch (err) {
-                console.error(err);
-                messageDiv.style.color = 'red';
-                messageDiv.innerText = '⚠️ সার্ভার কানেকশনে সমস্যা হয়েছে।';
+            if (error || !voucher) {
+                msgDiv.style.color = 'red';
+                msgDiv.innerText = '❌ ভুল কোড!';
+                return;
             }
+
+            // ২. কোড ইতিমধ্যে ব্যবহৃত হয়েছে কি না এবং মেয়াদ শেষ কি না চেক করা
+            if (voucher.is_used === true) {
+                if (voucher.expires_at && new Date() > new Date(voucher.expires_at)) {
+                    msgDiv.style.color = 'red';
+                    msgDiv.innerText = '❌ আপনার ভাউচারের মেয়াদ শেষ হয়ে গেছে!';
+                } else {
+                    msgDiv.style.color = 'red';
+                    msgDiv.innerText = '❌ এই কোডটি ইতিমধ্যে ব্যবহৃত হয়েছে!';
+                }
+                return;
+            }
+
+            // ৩. প্রথমবার ব্যবহার হলে বর্তমান সময় থেকে ৩০ দিন মেয়াদ সেট করা
+            const activatedTime = new Date();
+            const expiryTime = new Date();
+            expiryTime.setDate(expiryTime.getDate() + 30);
+
+            // ৪. ডাটাবেজ আপডেট করা
+            const { error: updateError } = await _supabase
+                .from('vouchers')
+                .update({ 
+                    is_used: true, 
+                    activated_at: activatedTime.toISOString(),
+                    expires_at: expiryTime.toISOString() 
+                })
+                .eq('code', codeInput);
+
+            if (updateError) {
+                msgDiv.style.color = 'red';
+                msgDiv.innerText = '❌ ডাটাবেজ আপডেট করতে সমস্যা হয়েছে!';
+                return;
+            }
+
+            // ৫. ডিভাইস লগে সেভ করা
+            await _supabase.from('device_logs').insert([
+                { voucher_used: codeInput, login_time: activatedTime.toISOString() }
+            ]);
+
+            msgDiv.style.color = 'green';
+            msgDiv.innerText = '✅ সফল! আপনার ইন্টারনেট সচল হয়েছে।';
+            
+            // সফল হওয়ার পর রিডাইরেক্ট বা অন্য কিছু করতে চাইলে এখানে কোড দিতে পারেন
         }
     </script>
 </body>
