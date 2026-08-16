@@ -3,182 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BanglarTrick - Try To New Thinks</title>
+    <title>WiFi Hotspot - Voucher Login</title>
+    <!-- সুপাবেস ক্লায়েন্ট লাইব্রেরি সিডিএন -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
         body {
-            background-color: #0f111a;
-            color: #d1d5db;
-            line-height: 1.6;
-        }
-        /* Top Header */
-        header {
-            background: #161b22;
-            padding: 12px 20px;
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            border-bottom: 2px solid #21262d;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            height: 100vh;
+            margin: 0;
         }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #00d2ff;
-            text-transform: uppercase;
-        }
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            margin-left: 15px;
-            font-size: 14px;
-            background: #238636;
-            padding: 6px 14px;
-            border-radius: 4px;
-        }
-        /* Notice Bar */
-        .notice-bar {
-            background: linear-gradient(90deg, #1f2937, #111827);
-            color: #fbbf24;
-            padding: 10px 20px;
-            font-size: 14px;
-            border-bottom: 1px solid #374151;
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 350px;
             text-align: center;
         }
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 40px 20px;
-            background: radial-gradient(circle, #1f2937 0%, #0f111a 100%);
-            border-bottom: 1px solid #21262d;
-        }
-        .hero h1 {
-            font-size: 28px;
-            color: #fff;
+        h2 {
+            color: #333;
             margin-bottom: 10px;
         }
-        .hero p {
-            font-size: 15px;
-            color: #9ca3af;
-        }
-        /* Container */
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-        .section-title {
-            font-size: 18px;
-            color: #00d2ff;
-            border-left: 4px solid #00d2ff;
-            padding-left: 10px;
-            margin: 20px 0 15px 0;
-        }
-        /* Post Card */
-        .post-card {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            padding: 18px;
-            margin-bottom: 15px;
-            transition: 0.2s;
-        }
-        .post-card:hover {
-            border-color: #00d2ff;
-        }
-        .post-title {
-            font-size: 18px;
-            color: #58a6ff;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        .post-snippet {
+        p {
+            color: #666;
             font-size: 14px;
-            color: #8b949e;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
         }
-        .post-meta {
-            font-size: 12px;
-            color: #6e7681;
-            display: flex;
-            justify-content: space-between;
-            border-top: 1px solid #21262d;
-            padding-top: 10px;
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
         }
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 25px;
-            background: #161b22;
-            color: #8b949e;
-            margin-top: 40px;
-            border-top: 1px solid #30363d;
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #message {
+            margin-top: 15px;
             font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="logo">BanglarTrick</div>
-        <div class="nav-links">
-            <a href="tel:05061359922">কল করুন</a>
-        </div>
-    </header>
-
-    <!-- Notice Bar -->
-    <div class="notice-bar">
-        🔥 স্বাগতম! যেকোনো প্রয়োজনে যোগাযোগ করুন: <strong>০৫০৬১৩৫৯৯২২</strong> (প্রতিষ্ঠাতা: রাকিব)
+    <div class="login-box">
+        <h2>ওয়াইফাই ইন্টারনেট</h2>
+        <p>ইন্টারনেট ব্যবহার করতে আপনার ভাউচার কোড দিন</p>
+        
+        <input type="text" id="voucherCode" placeholder="ভাউচার কোড লিখুন (যেমন: ABC123)">
+        <button onclick="verifyVoucher()">লগইন করুন</button>
+        
+        <div id="message"></div>
     </div>
 
-    <!-- Hero Section -->
-    <div class="hero">
-        <h1>তথ্য আদান প্রদানের সেরা ঠাঁই</h1>
-        <p>প্রযুক্তি, ইন্টারনেট এবং মোবাইল টিপস সবার আগে পেতে সাথেই থাকুন।</p>
-    </div>
+    <script>
+        // আপনার সুপাবেস প্রজেক্টের ক্রডেনশিয়াল এখানে বসাবেন
+        const SUPABASE_URL = 'আপনার_সুপাবেস_প্রজেক্টের_URL_এখানে_দিন';
+        const SUPABASE_ANON_KEY = 'আপনার_সুপাবেস_ANON_KEY_এখানে_দিন';
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="section-title">সর্বশেষ টিউনসমূহ</div>
+        // সুপাবেস ক্লায়েন্ট ইনিশিয়ালাইজ করা
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        <!-- Post 1 -->
-        <div class="post-card">
-            <a href="#" class="post-title">জিমেইল অ্যাকাউন্ট সুরক্ষিত রাখার অসাধারণ ৫টি উপায়</a>
-            <div class="post-snippet">আপনার পার্সোনাল জিমেইল অ্যাকাউন্ট হ্যাকারদের হাত থেকে রক্ষা করার আধুনিক পদ্ধতিগুলো জেনে নিন...</div>
-            <div class="post-meta">
-                <span>লেখক: রাকিব (Admin)</span>
-                <span>তারিখ: ১২ আগস্ট, ২০২৬</span>
-            </div>
-        </div>
+        async function verifyVoucher() {
+            const codeInput = document.getElementById('voucherCode').value.trim();
+            const messageDiv = document.getElementById('message');
 
-        <!-- Post 2 -->
-        <div class="post-card">
-            <a href="#" class="post-title">মোবাইল দিয়ে খুব সহজে ফ্রি ওয়েবসাইট তৈরির পদ্ধতি</a>
-            <div class="post-mig"></div>
-            <div class="post-snippet">কম্পিউটার ছাড়াই আপনার হাতে থাকা স্মার্টফোন দিয়ে গিটহাবে ফুল ফ্লেজেড সাইট বানিয়ে ফেলুন সহজে...</div>
-            <div class="post-meta">
-                <span>লেখক: রাকিব (Admin)</span>
-                <span>তারিখ: ১১ আগস্ট, ২০২৬</span>
-            </div>
-        </div>
+            if (!codeInput) {
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = 'দয়া করে ভাউচার কোড লিখুন!';
+                return;
+            }
 
-    </div>
+            messageDiv.style.color = '#333';
+            messageDiv.innerText = 'যাচাই করা হচ্ছে...';
 
-    <!-- Footer -->
-    <footer>
-        <p>Developer & Owner: <strong>রাকিব</strong> | মোবাইল: ০৫০৬১৩৫৯৯২২</p>
-        <p>&copy; ২০২৬ BanglarTrick. All Rights Reserved.</p>
-    </footer>
+            try {
+                // ১. ডাটাবেজ থেকে চেক করা কোডটি সঠিক কি না এবং আগে ব্যবহৃত হয়েছে কি না
+                const { data, error } = await _supabase
+                    .from('vouchers')
+                    .select('*')
+                    .eq('code', codeInput)
+                    .eq('is_used', false)
+                    .single();
 
+                if (error || !data) {
+                    messageDiv.style.color = 'red';
+                    messageDiv.innerText = '❌ ভুল অথবা ইতিমধ্যে ব্যবহৃত কোড!';
+                    return;
+                }
+
+                // ২. কোড সঠিক হলে এটিকে ব্যবহৃত (is_used = true) হিসেবে আপডেট করা
+                const { error: updateError } = await _supabase
+                    .from('vouchers')
+                    .update({ is_used: true })
+                    .eq('code', codeInput);
+
+                if (updateError) {
+                    messageDiv.style.color = 'red';
+                    messageDiv.innerText = '⚠️ একটি সমস্যা হয়েছে, আবার চেষ্টা করুন।';
+                    return;
+                }
+
+                // ৩. ইউজারের লগইন ইনফরমেশন device_logs টেবিলে সেভ করা
+                await _supabase.from('device_logs').insert([
+                    { 
+                        voucher_used: codeInput,
+                        login_time: new Date()
+                    }
+                ]);
+
+                messageDiv.style.color = 'green';
+                messageDiv.innerText = '✅ সফল! ইন্টারনেট কানেক্ট হচ্ছে...';
+                
+                // সফল হওয়ার পর পরবর্তী পেজে রিডাইরেক্ট করতে পারেন বা ইন্টারনেট দিতে পারেন
+                // setTimeout(() => { window.location.href = "success.html"; }, 2000);
+
+            } catch (err) {
+                console.error(err);
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = '⚠️ সার্ভার কানেকশনে সমস্যা হয়েছে।';
+            }
+        }
+    </script>
 </body>
 </html>
